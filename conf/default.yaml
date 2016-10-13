@@ -1,0 +1,6 @@
+
+INTERNAL_TEST: 1
+DEBUG: True
+db_uri: 'sqlite:///../db/db.sql'
+
+
