@@ -15,13 +15,14 @@ def main(args):
         indexes=[x.strip() for x in f.readlines()]
 
 
-    allrt=lims.get_reagent_types()
-    for rt in allrt:
-        if rt.sequence in indexes:
-            indexes.remove(rt.sequence)
+    to_upload=[]
+    for idx in indexes:
+        lims_rt=lims.get_reagent_types(name=idx)
+        if lims_rt
+            to_upload.append(idx)
 
-    if indexes:
-        xml=make_xml(indexes)
+    if to_upload:
+        xml=make_xml(to_upload)
 
         with open(outfile, 'w') as of:
             of.write(xml)
