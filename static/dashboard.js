@@ -11,7 +11,6 @@ $(".startbtn").click(function(){
     var fdata = new FormData();
     fdata.append('file', $("#"+script_name+"_file")[0].files[0])
 
-    console.log(file);
     if (file != ''){
         $("#"+script_name+"_status").html(makelabel('info', 'uploading...'));
         $.ajax({
