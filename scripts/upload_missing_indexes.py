@@ -18,7 +18,7 @@ def main(args):
     to_upload=[]
     for idx in indexes:
         lims_rt=lims.get_reagent_types(name=idx)
-        if lims_rt
+        if lims_rt:
             to_upload.append(idx)
 
     if to_upload:

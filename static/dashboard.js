@@ -47,8 +47,12 @@ function ajax_call_start(script_name,data){
         if ('output' in data){
             $("#result").html(data.output);        
         }
-    }).fail(function(){
+    }).fail(function(jqXHR, textStatus, errorThrown){
+        var response_obj=JSON.parse(jqXHR.responseText)
+        console.log(jqXHR);
+        window.res=jqXHR
         $("#"+script_name+"_status").html(makelabel('danger', 'error'));
+            $("#result").html(response_obj.output+"<br />"+response_obj.error);        
     });
 }
 function makelabel(my_class, text){

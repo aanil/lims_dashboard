@@ -41,20 +41,20 @@ def upload():
 @app.route('/start', methods=['POST'])
 def start():
     data=json.loads(request.get_data())
-    out=run_script(data.get('script_name'), data.get('options'))
-    return json.dumps({"status":"Success","output":out}), 200
+    code,out, err = run_script(data.get('script_name'), data.get('options'))
+    if code == 0:
+        return json.dumps({"status":"Success","output":out}), 200
+    else:
+        return json.dumps({"status":"Error","output":out, "error":err}), 500
 
 def run_script(name, options):
     cwd=os.getcwd()
     os.chdir('{}/uploads'.format(app.root_path))
     command = [app.config['my_scripts'][name]['command']]
     command.extend(options.split())
-    try:
-        out=subprocess.check_output(command)
-    except subprocess.CalledProcessError as e:
-        out=e.__str__()
-    except Exception:
-        out=traceback.format_exc(e)
+
+    handle=subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    out,err=handle.communicate()
 
     os.chdir(cwd)
-    return out
+    return handle.returncode, out, err
