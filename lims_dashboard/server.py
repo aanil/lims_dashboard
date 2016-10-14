@@ -49,7 +49,7 @@ def start():
 
 def run_script(name, options):
     cwd=os.getcwd()
-    os.chdir('{}/uploads'.format(app.root_path))
+    os.chdir('{0}/uploads'.format(app.root_path))
     command = [app.config['my_scripts'][name]['command']]
     command.extend(options.split())
 
