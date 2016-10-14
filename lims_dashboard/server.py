@@ -9,7 +9,7 @@ from lims_dashboard.routes import my_bp
 
 def create_app(root_path=os.path.split(os.path.split(os.path.realpath(__file__))[0])[0]):
     app = Flask(__name__, root_path=root_path)
-    UPLOAD_FOLDER = 'uploads'
+    UPLOAD_FOLDER = os.path.join(root_path, 'uploads')
     app.config['UPLOAD_FOLDER']=UPLOAD_FOLDER
     app.config['my_scripts']={}
     for conf_file in glob.glob(os.path.join(root_path, 'conf', '*.conf')):
