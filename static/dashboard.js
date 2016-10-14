@@ -48,9 +48,9 @@ function ajax_call_start(script_name,data){
             $("#result").html(data.output);        
         }
     }).fail(function(jqXHR, textStatus, errorThrown){
-        var response_obj=JSON.parse(jqXHR.responseText)
-        console.log(jqXHR);
         window.res=jqXHR
+        console.log(jqXHR.responseText);
+        var response_obj=JSON.parse(jqXHR.responseText)
         $("#"+script_name+"_status").html(makelabel('danger', 'error'));
             $("#result").html(response_obj.output+"<br />"+response_obj.error);        
     });
