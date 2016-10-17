@@ -29,7 +29,7 @@ def main(args):
             of.write(xml)
         command=['scp',outfile, 'glsjboss@{}:/opt/gls/clarity/tools/config-slicer/'.format(hostname)]
         subprocess.call(command)
-        command=['ssh', 'glsjboss@{}'.format(hostname),'""java -jar /opt/gls/clarity/tools/config-slicer/config-slicer-3.0.24.jar -k /opt/gls/clarity/tools/config-slicer/{of} -o import -s {hn} -u {un} -p {pw}""'.format(of=outfile,hn=hostname,un=USERNAME,pw=PASSWORD)]
+        command=['ssh', 'glsjboss@{}'.format(hostname),'""/opt/gls/clarity/bin/java -jar /opt/gls/clarity/tools/config-slicer/config-slicer-3.0.24.jar -k /opt/gls/clarity/tools/config-slicer/{of} -o import -s {hn} -u {un} -p {pw}""'.format(of=outfile,hn=hostname,un=USERNAME,pw=PASSWORD)]
         subprocess.call(command)
         print "Uploaded {} indexes".format(len(indexes))
     else:
