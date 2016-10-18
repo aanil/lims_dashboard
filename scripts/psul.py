@@ -1,5 +1,6 @@
 import argparse
 import pprint
+import logging
 
 from LIMS2DB.classes import ProjectSQL
 from genologics_sql.utils import get_configuration, get_session
