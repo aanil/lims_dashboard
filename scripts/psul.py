@@ -11,7 +11,7 @@ def main(args):
 
     mainlog = logging.getLogger('psullogger')
     mainlog.setLevel(level=logging.ERROR)
-    mfh = logging.handlers.StreamHandler
+    mfh = logging.StreamHandler
     mft = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     mfh.setFormatter(mft)
     mainlog.addHandler(mfh)
