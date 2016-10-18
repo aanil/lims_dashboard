@@ -2,11 +2,19 @@ import json
 import os
 
 
-from flask import request, render_template, Blueprint, current_app 
+from flask import request, render_template, Blueprint, current_app, send_file
 from lims_dashboard.utils import run_script
 
 
 my_bp= Blueprint("main_app", __name__)
+
+@my_bp.route('/static/<path:path>')
+def send_static(path):
+    return send_from_directory('static', path)
+
+@my_bp.route('/favicon.ico')
+def send_icon():
+    return send_file(os.path.join('static','favicon.ico'))
 
 @my_bp.route('/')
 def display_dashboard():
