@@ -2,6 +2,7 @@ import argparse
 import pprint
 import logging
 import yaml
+import os
 
 from LIMS2DB.classes import ProjectSQL
 import LIMS2DB.utils as lutils
@@ -11,7 +12,7 @@ from genologics_sql.tables import Project as DBProject
 
 def main(args):
 
-    with open('~/opt/config/post_process.yaml') as conf_file:
+    with open(os.path.expanduser('~/opt/config/post_process.yaml')) as conf_file:
         conf=yaml.load(conf_file)
     couch=lutils.setupServer(conf)
 
