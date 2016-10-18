@@ -1,6 +1,7 @@
 import argparse
 
 from genologics.lims import Lims
+from genologics.entities import Container
 from genologics.config import BASEURI, USERNAME, PASSWORD
 
 
