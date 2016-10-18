@@ -9,13 +9,8 @@ from genologics_sql.tables import Project as DBProject
 
 def main(args):
 
-    mainlog = logging.getLogger('psullogger')
-    mainlog.setLevel(level=logging.ERROR)
-    mfh = logging.StreamHandler
-    mft = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    mfh.setFormatter(mft)
-    mainlog.addHandler(mfh)
-
+    mainlog=get_logger('psullogger')
+    couch = load_couch_server(conf)
     lims_db = get_session()
     host=get_configuration()['url']
     if args.name:
@@ -29,6 +24,26 @@ def main(args):
         pp = pprint.pprint(P.obj)
     else:
         P.save()
+
+def load_couch_server(config_file):
+    """loads couch server with settings specified in 'config_file'"""
+    try:
+        stream = open(config_file,'r')
+        db_conf = yaml.load(stream)['statusdb']
+        url = db_conf['username']+':'+db_conf['password']+'@'+db_conf['url']+':'+str(db_conf['port'])
+        couch = couchdb.Server("http://" + url)
+        return couch
+    except KeyError:
+        raise RuntimeError("\"statusdb\" section missing from configuration file.")
+
+def get_logger(name)
+    mainlog = logging.getLogger(name)
+    mainlog.setLevel(level=logging.ERROR)
+    mfh = logging.StreamHandler()
+    mft = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    mfh.setFormatter(mft)
+    mainlog.addHandler(mfh)
+    return mainlog
 
 
 if __name__=="__main__":
