@@ -4,9 +4,14 @@ import logging
 import yaml
 import os
 
-from LIMS2DB.flowcell_sql import create_lims_data_obj, get_sequencing_steps, upload_to_couch
+import LIMS2DB.objectsDB.process_categories as pc_cg
 import LIMS2DB.utils as lutils
+
+from LIMS2DB.classes import Process
+from LIMS2DB.flowcell_sql import create_lims_data_obj, get_sequencing_steps, upload_to_couch
 from genologics_sql.utils import get_configuration, get_session
+
+from sqlalchemy import text
 
 
 def main(args):
