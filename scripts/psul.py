@@ -1,18 +1,25 @@
 import argparse
 import pprint
 import logging
+import yaml
 
 from LIMS2DB.classes import ProjectSQL
+import LIMS2DB.utils as lutils
 from genologics_sql.utils import get_configuration, get_session
 from genologics_sql.tables import Project as DBProject
 
 
 def main(args):
 
+    with open('~/opt/config/post_process.yaml') as conf_file:
+        conf=yaml.load(conf_file)
+    couch=lutils.setupServer(conf)
+
     mainlog=get_logger('psullogger')
-    couch = load_couch_server(conf)
+
     lims_db = get_session()
     host=get_configuration()['url']
+
     if args.name:
         pj_id=lims_db.query(DBProject.luid).filter(DBProject.name ==args.name).scalar()
     else:
@@ -25,18 +32,7 @@ def main(args):
     else:
         P.save()
 
-def load_couch_server(config_file):
-    """loads couch server with settings specified in 'config_file'"""
-    try:
-        stream = open(config_file,'r')
-        db_conf = yaml.load(stream)['statusdb']
-        url = db_conf['username']+':'+db_conf['password']+'@'+db_conf['url']+':'+str(db_conf['port'])
-        couch = couchdb.Server("http://" + url)
-        return couch
-    except KeyError:
-        raise RuntimeError("\"statusdb\" section missing from configuration file.")
-
-def get_logger(name)
+def get_logger(name):
     mainlog = logging.getLogger(name)
     mainlog.setLevel(level=logging.ERROR)
     mfh = logging.StreamHandler()
