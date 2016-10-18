@@ -7,6 +7,14 @@ from genologics_sql.tables import Project as DBProject
 
 
 def main(args):
+
+    mainlog = logging.getLogger('psullogger')
+    mainlog.setLevel(level=logging.ERROR)
+    mfh = logging.handlers.StreamHandler
+    mft = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    mfh.setFormatter(mft)
+    mainlog.addHandler(mfh)
+
     lims_db = get_session()
     host=get_configuration()['url']
     if args.name:
