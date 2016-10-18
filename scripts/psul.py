@@ -13,8 +13,10 @@ def main(args):
         pj_id=lims_db.query(DBProject.luid).filter(DBProject.name ==args.name).scalar()
     else:
         pj_id=args.pid
+
     P = ProjectSQL(lims_db, mainlog, pj_id, host, couch)
-    if  args.print:
+
+    if args.test:
         pp = pprint.pprint(P.obj)
     else:
         P.save()
@@ -24,7 +26,7 @@ if __name__=="__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-p", dest="pid")
     parser.add_argument("-n", dest="name")
-    parser.add_argument("-x", dest="print", action='store_true')
+    parser.add_argument("-x", dest="test", action='store_true')
     args = parser.parse_args()
     if args.pid is None and args.name is None:
         pa.error("at least one of -p and -n is required")
