@@ -7,7 +7,7 @@ from genologics.config import BASEURI, USERNAME, PASSWORD
 
 def main(args):
     lims = Lims(BASEURI, USERNAME, PASSWORD)
-    cont = Container(lims, args.flowcell)
+    cont = Container(lims, id=args.flowcell)
     cont.name = cont.id
     cont.put()
 
