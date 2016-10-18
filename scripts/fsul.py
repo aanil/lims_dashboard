@@ -53,7 +53,4 @@ if __name__=="__main__":
     parser.add_argument("-f", dest="flowcell", required=True)
     parser.add_argument("-x", dest="test", action='store_true')
     args = parser.parse_args()
-    if args.pid is None and args.name is None:
-        pa.error("at least one of -p and -n is required")
-    else:
-        main(args)
+    main(args)
