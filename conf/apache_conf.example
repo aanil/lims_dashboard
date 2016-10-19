@@ -1,0 +1,15 @@
+<VirtualHost *:80>
+    ServerName <your hostname>
+    WSGIDaemonProcess lims_dashboard user=hiseq.bioinfo group=users threads=5 python-path=<path to the python you want to use>
+    WSGIScriptAlias / <location of the wsgi file>
+
+    <Directory /home/hiseq.bioinfo/opt/lims_dashboard/>
+        WSGIProcessGroup lims_dashboard 
+        WSGIApplicationGroup %{GLOBAL}
+        Order deny,allow
+        Deny from all
+        Allow from <your IP range>
+    </Directory>
+    ErrorLog logs/lims_dashboard-error_log
+    CustomLog logs/lims_dashboard-access_log combined
+</VirtualHost>
