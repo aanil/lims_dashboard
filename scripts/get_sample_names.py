@@ -23,6 +23,7 @@ def main(args):
         return 0
 
     print '<table class="table table-striped">'
+    print '<tr><th>NGI Name</th><th>Customer Name</th></tr>'
     for sample in sorted(d.keys()):
         print "<tr><td>{}</td><td>{}</td></tr>".format(sample, d[sample])
 
