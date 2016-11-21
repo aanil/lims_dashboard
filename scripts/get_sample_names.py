@@ -22,9 +22,11 @@ def main(args):
         print "Project not found"
         return 0
 
+    print '<table class="table table-striped">'
     for sample in sorted(d.keys()):
-        print "{}\t{}".format(sample, d[sample])
+        print "<tr><td>{}</td><td>{}</td></tr>".format(sample, d[sample])
 
+    print "</table>"
 
 if __name__ == "__main__":
 
