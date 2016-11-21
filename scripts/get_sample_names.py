@@ -14,8 +14,13 @@ def main(args):
     couch=lutils.setupServer(conf)
     db=couch['projects']
     view=db.view('samples/customer_names')
+    d=None
     for row in view[args.project]:
         d=row.value
+
+    if not d:
+        print "Project not found"
+        return 0
 
     for sample in sorted(d.keys()):
         print "{}\t{}".format(sample, d[sample])
