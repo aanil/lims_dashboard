@@ -28,7 +28,7 @@ def makeBarcode(barcode):
 def getArgs():
     desc = (" Prints the text on zebra barcode printer")
     parser = ArgumentParser(description=desc)
-    parser.add_argument('-n', '--name', type=str, default='test',
+    parser.add_argument('-n', '--name', nargs='+', type=str, default='test',
                         help=('Prints a label with the given text'))
     parser.add_argument('--test', action="store_true",
                         help=('only prints the file and the lp command'))
@@ -46,6 +46,8 @@ def get_logger(name):
 
 def main(args):
     log=get_logger("print_label")
+    if isinstance(args.name, list):
+        args.name=" ".join(args.name)
     lines = makeBarcode(args.name)
     lp_args = ["lp"]
     lp_args.extend(["-h","homer2.scilifelab.se:631"])
