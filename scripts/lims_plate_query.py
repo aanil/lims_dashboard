@@ -113,7 +113,7 @@ def query_plate_database(db, project):
     results = []
     for row in db.view('_all_docs'):
         if project in db[row.id]['projects'] and db[row.id]['process']!='':
-            results.append([row.id,db[row.id]['name'],db[row.id]['process']],','.join(db[row.id]['projects']))
+            results.append([row.id,db[row.id]['name'],db[row.id]['process'],','.join(db[row.id]['projects'])])
     return results
 
 # Read in database and query project
@@ -128,7 +128,7 @@ def main(lims, db, project):
         print('<table class="table table-striped">')
         print('<tr><th>Plate ID</th><th>Plate Name</th><th>Source</th><th>Projects</th></tr>')
         for i in results:
-            print("<tr><td>{}</td><td>{}</td><td>{}</td></tr>".format(i[0],i[1],i[2],i[3]))
+            print("<tr><td>{}</td><td>{}</td><td>{}</td><td>{}</td></tr>".format(i[0],i[1],i[2],i[3]))
         print("</table>")
 
 if __name__ == "__main__":
