@@ -1,21 +1,24 @@
 import json
 import os
 
-from flask import request, render_template, Blueprint, current_app, send_file
+from flask import request, render_template, Blueprint, current_app, send_file, send_from_directory
 from lims_dashboard.utils import run_script
 
 import logging
 logger = logging.getLogger("lims_dashboard")
 
-my_bp= Blueprint("main_app", __name__)
+my_bp = Blueprint("main_app", __name__)
+
 
 @my_bp.route('/static/<path:path>')
 def send_static(path):
     return send_from_directory('static', path)
 
+
 @my_bp.route('/favicon.ico')
 def send_icon():
-    return send_file(os.path.join('static','favicon.ico'))
+    return send_file(os.path.join('static', 'favicon.ico'))
+
 
 @my_bp.route('/')
 def display_dashboard():
@@ -34,13 +37,14 @@ def upload():
         return '{status:"Success"}', 201
     return '{status:"Failed"}', 400
 
+
 @my_bp.route('/start', methods=['POST'])
 def start():
-    data=json.loads(request.get_data())
-    code,out, err = run_script(current_app, data.get('script_name'), data.get('options'))
+    data = json.loads(request.get_data())
+    code, out, err = run_script(current_app, data.get('script_name'), data.get('options'))
     if code == 0:
         logger.info("The run was successful: {}".format(out))
-        return json.dumps({"status":"Success","output":out}), 200
+        return json.dumps({"status": "Success", "output": out}), 200
     else:
         logger.warning("The run had an error. Output: {}, Error: {}".format(out, err))
-        return json.dumps({"status":"Error","output":out, "error":err}), 500
+        return json.dumps({"status": "Error", "output": out, "error": err}), 500
