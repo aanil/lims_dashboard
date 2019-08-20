@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import codecs
-import csv
 from genologics.lims import *
 from genologics.config import BASEURI, USERNAME, PASSWORD
 import couchdb
@@ -51,18 +49,20 @@ HEADER = [
     'LIMS step',
 ]
 
+
 # Read in plate database file.
 def read_plate_database(db):
-    database=[]
+    database = []
     for docid in db.view('_all_docs'):
         i = docid['id']
         database.append(i)
     return database
 
+
 # Update database
 def update_plate_database(lims, db):
     # Fetch existing plates in couchdb
-    database=read_plate_database(db)
+    database = read_plate_database(db)
     # Fetch all containers in LIMS
     containers = lims.get_containers(type=PLATE_TYPE)
     all_containers_in_lims = []
@@ -84,9 +84,9 @@ def update_plate_database(lims, db):
                 for artifact in artifacts:
                     try:
                         if artifact.parent_process.type.name in PROCESS_TYPE:
-                            if artifact.parent_process.type.name == 'Size Selection (Pippin)' and artifact.parent_process.parent_processes()[0].type.name !='Library Pooling (RAD-seq) v1.0':
+                            if artifact.parent_process.type.name == 'Size Selection (Pippin)' and artifact.parent_process.parent_processes()[0].type.name != 'Library Pooling (RAD-seq) v1.0':
                                 process_name = ''
-                            elif artifact.parent_process.type.name == 'Purification' and artifact.parent_process.parent_processes()[0].type.name !='Enrich DNA fragments (TruSeq RNA) 4.0':
+                            elif artifact.parent_process.type.name == 'Purification' and artifact.parent_process.parent_processes()[0].type.name != 'Enrich DNA fragments (TruSeq RNA) 4.0':
                                 process_name = ''
                             else:
                                 process_name = str(artifact.parent_process.type.name)
@@ -103,18 +103,20 @@ def update_plate_database(lims, db):
                         for sample in artifact.samples:
                             project_list.append(str(sample.name).split('_')[0])
                 project_list = list(set(project_list))
-            new_entry.append({'_id':id, 'name':container_name, 'process':process_name, 'projects':project_list})
+            new_entry.append({'_id': id, 'name': container_name, 'process': process_name, 'projects': project_list})
         # Import to couchdb
         db.update(new_entry)
     return db
+
 
 # Query database with project ID
 def query_plate_database(db, project):
     results = []
     for row in db.view('_all_docs'):
-        if project in db[row.id]['projects'] and db[row.id]['process']!='':
-            results.append([row.id,db[row.id]['name'],db[row.id]['process'],','.join(db[row.id]['projects'])])
+        if project in db[row.id]['projects'] and db[row.id]['process'] != '':
+            results.append([row.id, db[row.id]['name'], db[row.id]['process'], ','.join(db[row.id]['projects'])])
     return results
+
 
 # Read in database and query project
 def main(lims, db, project):
@@ -128,19 +130,25 @@ def main(lims, db, project):
         print('<table class="table table-striped">')
         print('<tr><th>Plate ID</th><th>Plate Name</th><th>Source</th><th>Projects</th></tr>')
         for i in results:
-            print("<tr><td>{}</td><td>{}</td><td>{}</td><td>{}</td></tr>".format(i[0],i[1],i[2],i[3]))
+            print("<tr><td>{}</td><td>{}</td><td>{}</td><td>{}</td></tr>".format(i[0], i[1], i[2], i[3]))
         print("</table>")
+
 
 if __name__ == "__main__":
     parser = ArgumentParser(description=DESC)
-    parser.add_argument('-p', '--project', default = 'P9804', dest = 'project', help='Project ID for querying plates')
+    parser.add_argument('-p', '--project', default='P9804', dest='project', help='Project ID for querying plates')
+    parser.add_argument(
+        '--config',
+        default=os.path.expanduser('~/opt/config/post_process.yaml'),
+        help="The config file for the script, by default '~/opt/config/post_process.yaml'"
+        )
     args = parser.parse_args()
-    lims = Lims(BASEURI,USERNAME,PASSWORD)
+    lims = Lims(BASEURI, USERNAME, PASSWORD)
     lims.check_version()
-    with open(os.path.expanduser('~/opt/config/post_process.yaml')) as conf_file:
-        conf=yaml.load(conf_file)
+    with open(args.config) as conf_file:
+        conf = yaml.load(conf_file)
     db_conf = conf['statusdbdev']
-    url="http://{0}:{1}@{2}:{3}".format(db_conf['username'], db_conf['password'], db_conf['url'], db_conf['port'])
+    url = "http://{0}:{1}@{2}:{3}".format(db_conf['username'], db_conf['password'], db_conf['url'], db_conf['port'])
     couchserver = couchdb.Server(url)
     dbname = "plates"
     if dbname in couchserver:

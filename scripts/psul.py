@@ -13,18 +13,18 @@ from genologics_sql.tables import Project as DBProject
 def main(args):
 
     with open(os.path.expanduser('~/opt/config/post_process.yaml')) as conf_file:
-        conf=yaml.load(conf_file)
-    couch=lutils.setupServer(conf)
+        conf = yaml.load(conf_file)
+    couch = lutils.setupServer(conf)
 
-    mainlog=get_logger('psullogger')
+    mainlog = get_logger('psullogger')
 
     lims_db = get_session()
-    host=get_configuration()['url']
+    host = get_configuration()['url']
 
     if args.name:
-        pj_id=lims_db.query(DBProject.luid).filter(DBProject.name ==args.name).scalar()
+        pj_id = lims_db.query(DBProject.luid).filter(DBProject.name ==args.name).scalar()
     else:
-        pj_id=args.pid
+        pj_id = args.pid
 
     P = ProjectSQL(lims_db, mainlog, pj_id, host, couch)
 
@@ -32,6 +32,7 @@ def main(args):
         pp = pprint.pprint(P.obj)
     else:
         P.save()
+
 
 def get_logger(name):
     mainlog = logging.getLogger(name)
@@ -43,13 +44,13 @@ def get_logger(name):
     return mainlog
 
 
-if __name__=="__main__":
+if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-p", dest="pid")
     parser.add_argument("-n", dest="name")
     parser.add_argument("-x", dest="test", action='store_true')
     args = parser.parse_args()
     if args.pid is None and args.name is None:
-        pa.error("at least one of -p and -n is required")
+        raise argparse.ArgumentError("at least one of -p and -n is required")
     else:
         main(args)
