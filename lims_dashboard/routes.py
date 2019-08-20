@@ -1,10 +1,11 @@
 import json
 import os
 
-
 from flask import request, render_template, Blueprint, current_app, send_file
 from lims_dashboard.utils import run_script
 
+import logging
+logger = logging.getLogger("lims_dashboard")
 
 my_bp= Blueprint("main_app", __name__)
 
@@ -38,6 +39,8 @@ def start():
     data=json.loads(request.get_data())
     code,out, err = run_script(current_app, data.get('script_name'), data.get('options'))
     if code == 0:
+        logger.info("The run was successful: {}".format(out))
         return json.dumps({"status":"Success","output":out}), 200
     else:
+        logger.warning("The run had an error. Output: {}, Error: {}".format(out, err))
         return json.dumps({"status":"Error","output":out, "error":err}), 500

@@ -1,6 +1,8 @@
 import glob
 import os
 import yaml
+import logging
+
 
 from flask import Flask, Blueprint
 
@@ -22,8 +24,14 @@ def create_app(root_path=os.path.split(os.path.split(os.path.realpath(__file__))
     app.register_blueprint(my_bp)
     return app
 
+def setup_logger():
+    logger = logging.getLogger("lims_dashboard")
+    logger.setLevel("INFO")
+    loghandler = logging.StreamHandler()
+    loghandler.setFormatter(logging.Formatter('%(asctime)s : %(levelname)s : %(message)s'))
+    logger.addHandler(loghandler)
 
-
+setup_logger()
 
 app=None
 if not app:
