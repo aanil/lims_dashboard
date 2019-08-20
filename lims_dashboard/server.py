@@ -17,7 +17,7 @@ def create_app(root_path=os.path.split(os.path.split(os.path.realpath(__file__))
     app.config['my_scripts']={}
     for conf_file in glob.glob(os.path.join(root_path, 'conf', '*.conf')):
         with open(conf_file) as sconf:
-            app.config['my_scripts'].update(yaml.load(sconf))
+            app.config['my_scripts'].update(yaml.load(sconf, Loader=yaml.SafeLoader))
 
     app.register_blueprint(my_bp)
     return app
