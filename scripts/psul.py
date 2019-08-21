@@ -12,7 +12,7 @@ from genologics_sql.tables import Project as DBProject
 
 def main(args):
 
-    with open(os.path.expanduser('~/opt/config/post_process.yaml')) as conf_file:
+    with open(args.conf, 'r') as conf_file:
         conf = yaml.load(conf_file)
     couch = lutils.setupServer(conf)
 
@@ -49,6 +49,7 @@ if __name__ == "__main__":
     parser.add_argument("-p", dest="pid")
     parser.add_argument("-n", dest="name")
     parser.add_argument("-x", dest="test", action='store_true')
+    parser.add_argument("-c", dest="conf", default="{0}/conf/lims_dashboard.yaml".format(os.environ["HOME"]))
     args = parser.parse_args()
     if args.pid is None and args.name is None:
         raise argparse.ArgumentError("at least one of -p and -n is required")

@@ -16,7 +16,7 @@ from sqlalchemy import text
 
 def main(args):
 
-    with open(os.path.expanduser('~/opt/config/post_process.yaml')) as conf_file:
+    with open(args.conf) as conf_file:
         conf = yaml.load(conf_file)
     couch = lutils.setupServer(conf)
 
@@ -58,5 +58,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-f", dest="flowcell", required=True)
     parser.add_argument("-x", dest="test", action='store_true')
+    parser.add_argument("-c", dest="conf", default="{0}/conf/lims_dashboard.yaml".format(os.environ["HOME"]))
     args = parser.parse_args()
     main(args)

@@ -11,7 +11,7 @@ import LIMS2DB.utils as lutils
 
 def main(args):
 
-    with open(os.path.expanduser('~/opt/config/post_process.yaml')) as conf_file:
+    with open(args.conf, 'r') as conf_file:
         conf = yaml.load(conf_file)
     couch = lutils.setupServer(conf)
     db = couch['projects']
@@ -38,5 +38,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=desc)
     parser.add_argument('-p', '--project', dest="project",
                         help=('print samples for the given project'))
+    parser.add_argument("-c", dest="conf", default="{0}/conf/lims_dashboard.yaml".format(os.environ["HOME"]))
     args = parser.parse_args()
     main(args)

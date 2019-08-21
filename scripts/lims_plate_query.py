@@ -139,8 +139,8 @@ if __name__ == "__main__":
     parser.add_argument('-p', '--project', default='P9804', dest='project', help='Project ID for querying plates')
     parser.add_argument(
         '--config',
-        default=os.path.expanduser('~/opt/config/post_process.yaml'),
-        help="The config file for the script, by default '~/opt/config/post_process.yaml'"
+        default="{0}/conf/lims_dashboard.yaml".format(os.environ["HOME"]),
+        help="The config file for the script, by default '~/conf/lims_dashboard.yaml'"
         )
     args = parser.parse_args()
     lims = Lims(BASEURI, USERNAME, PASSWORD)

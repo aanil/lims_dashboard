@@ -47,6 +47,6 @@ def main(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-p", dest="project", required=True)
-    parser.add_argument("-c", dest="conf", default="{0}/opt/config/post_process.yaml".format(os.environ["HOME"]))
+    parser.add_argument("-c", dest="conf", default="{0}/conf/lims_dashboard.yaml".format(os.environ["HOME"]))
     args = parser.parse_args()
     main(args)
