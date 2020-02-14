@@ -139,7 +139,7 @@ if __name__ == "__main__":
     parser.add_argument('-p', '--project', default='P9804', dest='project', help='Project ID for querying plates')
     parser.add_argument(
         '--config',
-        default="{0}/conf/LIMS2DB/post_process.yaml"".format(os.environ["HOME"]),
+        default="{0}/conf/LIMS2DB/post_process.yaml".format(os.environ["HOME"]),
         help="The config file for the script, by default '~/conf/lims_dashboard.yaml'"
         )
     args = parser.parse_args()
