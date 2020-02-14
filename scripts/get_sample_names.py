@@ -38,6 +38,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=desc)
     parser.add_argument('-p', '--project', dest="project",
                         help=('print samples for the given project'))
-    parser.add_argument("-c", dest="conf", default="{0}/conf/lims_dashboard.yaml".format(os.environ["HOME"]))
+    parser.add_argument("-c", dest="conf", default="{0}/conf/LIMS2DB/post_process.yaml"".format(os.environ["HOME"]))
     args = parser.parse_args()
     main(args)

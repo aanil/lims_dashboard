@@ -49,7 +49,7 @@ if __name__ == "__main__":
     parser.add_argument("-p", dest="pid")
     parser.add_argument("-n", dest="name")
     parser.add_argument("-x", dest="test", action='store_true')
-    parser.add_argument("-c", dest="conf", default="{0}/conf/lims_dashboard.yaml".format(os.environ["HOME"]))
+    parser.add_argument("-c", dest="conf", default="{0}/conf/LIMS2DB/post_process.yaml".format(os.environ["HOME"]))
     args = parser.parse_args()
     if args.pid is None and args.name is None:
         raise argparse.ArgumentError("at least one of -p and -n is required")
