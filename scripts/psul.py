@@ -13,7 +13,7 @@ from genologics_sql.tables import Project as DBProject
 def main(args):
 
     with open(args.conf, 'r') as conf_file:
-        conf = yaml.load(conf_file)
+        conf = yaml.safe_load(conf_file)
     couch = lutils.setupServer(conf)
 
     mainlog = get_logger('psullogger')

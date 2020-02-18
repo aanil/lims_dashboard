@@ -140,7 +140,7 @@ if __name__ == "__main__":
     parser.add_argument(
         '--config',
         default="{0}/conf/LIMS2DB/post_process.yaml".format(os.environ["HOME"]),
-        help="The config file for the script, by default '~/conf/lims_dashboard.yaml'"
+        help="The config file for the script, by default '~/conf/LIMS2DB/post_process.yaml'"
         )
     args = parser.parse_args()
     lims = Lims(BASEURI, USERNAME, PASSWORD)
