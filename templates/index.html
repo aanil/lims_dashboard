@@ -24,11 +24,17 @@
                     <th>Status</th>
                 </tr>
                 {% for name in scripts %}
-                <tr>
-                    <td>{{ name }}</td>
-                    <td><input id="{{ name }}_options" type="text" size="75" value="{{ scripts[name]['options'] }}" data-script="{{ name }}" onfocus"this.value = '';"/></td>
-                    <td><input id="{{ name }}_file" type="file" class="btn btn-default" value="Upload" data-script="{{ name }}" /></td>
-                    <td><input id="{{ name }}_start" type="button" class="btn btn-primary startbtn" value="Start" data-script="{{ name }}" /></td>
+                <tr {% if scripts[name]['disabled'] %} bgcolor="#e3e8e8" {% endif %} >
+                    <td {% if scripts[name]['disabled'] %} style="opacity: 0.6;"{% endif %}>{{ name }}</td>
+                    <td><input id="{{ name }}_options" type="text" size="75" value="{{ scripts[name]['options'] }}" data-script="{{ name }}" onfocus"this.value = '';" 
+                                    {% if scripts[name]['disabled'] %} disabled="disabled" style="opacity: 0.6;" {% endif %} />
+                    </td>
+                    <td><input id="{{ name }}_file" type="file" class="btn btn-default" value="Upload" data-script="{{ name }}"
+                                    {% if scripts[name]['disabled'] %} disabled="disabled" {% endif %} />
+                    </td>
+                    <td><input id="{{ name }}_start" type="button" class="btn btn-primary startbtn" value="Start" data-script="{{ name }}"
+                                    {% if scripts[name]['disabled'] %}  disabled="disabled" {% endif %} />
+                    </td>
                     <td id="{{ name }}_status"></td>
                 </tr>
                 {% endfor %}

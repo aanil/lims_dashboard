@@ -12,7 +12,7 @@ import LIMS2DB.utils as lutils
 def main(args):
 
     with open(args.conf, 'r') as conf_file:
-        conf = yaml.load(conf_file)
+        conf = yaml.safe_load(conf_file)
     couch = lutils.setupServer(conf)
     db = couch['projects']
     view = db.view('samples/customer_names')

@@ -17,7 +17,7 @@ from sqlalchemy import text
 def main(args):
 
     with open(args.conf) as conf_file:
-        conf = yaml.load(conf_file)
+        conf = yaml.safe_load(conf_file)
     couch = lutils.setupServer(conf)
 
     mainlog = get_logger('fsullogger')
