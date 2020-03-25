@@ -45,7 +45,7 @@ def main(args):
             for key in doc.keys():
                 if key != '_rev':
                     docd[key] = doc[key]
-        dbd.save(doc)
+        dbd.save(docd)
 
 
 if __name__ == "__main__":
