@@ -53,8 +53,7 @@ def main(args):
         args.name = " ".join(args.name)
     lines = makeBarcode(args.name)
     lp_args = ["lp"]
-    lp_args.extend(["-h", "homer2.scilifelab.se:631"])
-    lp_args.extend(["-d", "zebrabarcode"])
+    lp_args.extend(["-d", "Zebra"])
     if not args.test:
         lp_args.append("-")  # lp accepts stdin if '-' is given as filename
         logging.info('Ready to call lp for printing.')
