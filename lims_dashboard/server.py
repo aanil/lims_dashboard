@@ -37,5 +37,5 @@ setup_logger()
 
 app = None
 if not app:
-    python_exec = "{0}/anaconda/envs/lims_dashboard/bin/python".format(os.environ["HOME"])
+    python_exec = "{0}/anaconda/envs/lims2db/bin/python".format(os.environ["HOME"])
     app = create_app(python=python_exec)
