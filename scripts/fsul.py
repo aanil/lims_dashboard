@@ -26,7 +26,7 @@ def main(args):
                 inner join containerplacement cp on ct.containerid=cp.containerid \
                 inner join processiotracker piot on piot.inputartifactid=cp.processartifactid \
                 inner join process pro on pro.processid=piot.processid \
-                where pro.typeid in ({seq_type_ids}) and ct.name='{ct_name}';".format(seq_type_ids=",".join(pc_cg.SEQUENCING.keys()), ct_name=args.flowcell)
+                where pro.typeid in ({seq_type_ids}) and ct.name='{ct_name}';".format(seq_type_ids=",".join(list(pc_cg.SEQUENCING.keys())), ct_name=args.flowcell)
     seq_steps = db_session.query(Process).from_statement(text(query)).all()
 
     for step in seq_steps:

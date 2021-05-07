@@ -60,11 +60,19 @@ def main(args):
     if not args.test:
         lp_args.append("-")  # lp accepts stdin if '-' is given as filename
         logging.info('Ready to call lp for printing.')
-        sp = subprocess.Popen(lp_args,
-                              stdin=subprocess.PIPE,
-                              stdout=subprocess.PIPE,
-                              stderr=subprocess.PIPE)
-        sp.stdin.write(unicode('\n'.join(lines), 'utf-8'))
+        if sys.version_info[0] == 3:
+            sp = subprocess.Popen(lp_args,
+                                  stdin=subprocess.PIPE,
+                                  stdout=subprocess.PIPE,
+                                  stderr=subprocess.PIPE,
+                                  encoding='utf8')
+            sp.stdin.write(str('\n'.join(lines), 'utf-8'))
+        elif sys.version_info[0] == 2:
+            sp = subprocess.Popen(lp_args,
+                                  stdin=subprocess.PIPE,
+                                  stdout=subprocess.PIPE,
+                                  stderr=subprocess.PIPE)
+            sp.stdin.write(unicode('\n'.join(lines), 'utf-8'))
         logging.info('lp command is called for printing.')
         stdout, stderr = sp.communicate()  # Will wait for sp to finish
         log.info('printed {0} labels.'.format(args.number))
