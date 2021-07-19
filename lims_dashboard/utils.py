@@ -4,7 +4,7 @@ import subprocess
 import traceback
 
 import logging
-logger = logging.getLogger("lims_dashboard")
+logger = logging.getLogger("werkzeug")
 
 
 def run_script(app, name, options):

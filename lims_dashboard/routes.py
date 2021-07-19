@@ -5,7 +5,7 @@ from flask import request, render_template, Blueprint, current_app, send_file, s
 from lims_dashboard.utils import run_script
 
 import logging
-logger = logging.getLogger("lims_dashboard")
+logger = logging.getLogger("werkzeug")
 
 my_bp = Blueprint("main_app", __name__)
 
