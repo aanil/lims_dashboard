@@ -2,7 +2,7 @@ import json
 import os
 
 from flask import request, render_template, Blueprint, current_app, send_file, send_from_directory
-from lims_dashboard.utils import run_script
+from utils import run_script
 
 import logging
 logger = logging.getLogger("werkzeug")

@@ -7,7 +7,7 @@ import argparse
 
 from flask import Flask
 
-from lims_dashboard.routes import my_bp
+from routes import my_bp
 
 
 def create_app(root_path=os.path.split(os.path.split(os.path.realpath(__file__))[0])[0], python=None):
