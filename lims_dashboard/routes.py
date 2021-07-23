@@ -42,7 +42,7 @@ def upload():
 def start():
     data = json.loads(request.get_data())
     code, out, err = run_script(current_app, data.get('script_name'), data.get('options'))
-    if code == 0:
+    if code == 0 and not err:
         logger.info("The run was successful: {}".format(out))
         return json.dumps({"status": "Success", "output": out}), 200
     else:

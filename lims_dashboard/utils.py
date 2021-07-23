@@ -23,7 +23,7 @@ def run_script(app, name, options):
     logger.info("About to run command: {}".format(" ".join(command)))
 
     try:
-        handle = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        handle = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
         out, err = handle.communicate()
         returncode = handle.returncode
     except Exception:
