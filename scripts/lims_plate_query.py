@@ -146,7 +146,7 @@ if __name__ == "__main__":
     lims = Lims(BASEURI, USERNAME, PASSWORD)
     lims.check_version()
     with open(args.config) as conf_file:
-        conf = yaml.load(conf_file)
+        conf = yaml.safe_load(conf_file)
     db_conf = conf['statusdbdev']
     url = "http://{0}:{1}@{2}:{3}".format(db_conf['username'], db_conf['password'], db_conf['url'], db_conf['port'])
     couchserver = couchdb.Server(url)

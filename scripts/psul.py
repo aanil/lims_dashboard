@@ -17,7 +17,7 @@ def main(args):
     couch = lutils.setupServer(conf)
 
     with open(args.oconf, 'r') as ocf:
-        oconf = yaml.load(ocf)['order_portal']
+        oconf = yaml.safe_load(ocf)['order_portal']
 
     mainlog = get_logger('psullogger')
 

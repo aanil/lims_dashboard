@@ -2,10 +2,10 @@ import json
 import os
 
 from flask import request, render_template, Blueprint, current_app, send_file, send_from_directory
-from lims_dashboard.utils import run_script
+from utils import run_script
 
 import logging
-logger = logging.getLogger("lims_dashboard")
+logger = logging.getLogger("werkzeug")
 
 my_bp = Blueprint("main_app", __name__)
 
@@ -42,9 +42,14 @@ def upload():
 def start():
     data = json.loads(request.get_data())
     code, out, err = run_script(current_app, data.get('script_name'), data.get('options'))
-    if code == 0:
-        logger.info("The run was successful: {}".format(out))
-        return json.dumps({"status": "Success", "output": out}), 200
+    if code == 0
+        if err:
+            logger.info("The run was successful but with warnings: {}".format(err))
+            to_return =  {"status": "Success with warnings", "output": out, "error": err}
+        else:
+            logger.info("The run was successful: {}".format(out))
+            to_return =  {"status": "Success", "output": out}
+        return json.dumps(to_return), 200
     else:
         logger.warning("The run had an error. Output: {}, Error: {}".format(out, err))
         return json.dumps({"status": "Error", "output": out, "error": err}), 500
