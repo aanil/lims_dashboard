@@ -42,7 +42,7 @@ def upload():
 def start():
     data = json.loads(request.get_data())
     code, out, err = run_script(current_app, data.get('script_name'), data.get('options'))
-    if code == 0
+    if code == 0:
         if err:
             logger.info("The run was successful but with warnings: {}".format(err))
             to_return =  {"status": "Success with warnings", "output": out, "error": err}
