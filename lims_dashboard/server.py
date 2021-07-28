@@ -45,4 +45,4 @@ if __name__ == "__main__":
     parser.add_argument("--logfile", help="Path to logfile")
     args = parser.parse_args()
     setup_logger(args.logfile)
-    app.run(port=args.port)
+    app.run(port=int(args.port))
