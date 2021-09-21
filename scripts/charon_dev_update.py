@@ -42,7 +42,7 @@ def main(args):
         docd = dbd.get(i)
         if not docd:
             docd = {}
-            for key in doc.keys():
+            for key in list(doc.keys()):
                 if key != '_rev':
                     docd[key] = doc[key]
         dbd.save(docd)
