@@ -1,6 +1,6 @@
 
 $(".startbtn").click(function(){
-    $("#result").html("");        
+    $("#result").html("");
     var script_name=$(this).data('script');
     $("#"+script_name+"_status").html(makelabel('info', 'running...'));
     var options=$("#"+script_name+"_options")[0].value;
@@ -41,17 +41,23 @@ function ajax_call_start(script_name,data){
             data:JSON.stringify(data),
             type       : 'POST'
     }).done(function(data){
-        $("#"+script_name+"_status").html(makelabel('success', 'done'));
+        var label = 'success';
+        var msg = 'done';
+        if(data['status']=='Success with warnings'){
+          label = 'warning'
+          msg = msg+ ' with warnings'
+        }
+        $("#"+script_name+"_status").html(makelabel(label, msg));
         console.log(data);
-        if ('output' in data){
-            $("#result").html(data.output);        
+        if ('output' in data || 'error' in data){
+            $("#result").html(data.output +"<br />" + data.error);
         }
     }).fail(function(jqXHR, textStatus, errorThrown){
         window.res=jqXHR
         console.log(jqXHR.responseText);
         var response_obj=JSON.parse(jqXHR.responseText)
         $("#"+script_name+"_status").html(makelabel('danger', 'error'));
-            $("#result").html(response_obj.output+"<br />"+response_obj.error);        
+            $("#result").html(response_obj.output+"<br />"+response_obj.error);
     });
 }
 function makelabel(my_class, text){

@@ -8,10 +8,10 @@ def main(args):
     with open(args.conf, 'r') as conf_f:
         conf = yaml.load(conf_f, Loader=yaml.SafeLoader)
     db_conf = conf['statusdb']
-    url = "http://{0}:{1}@{2}:{3}".format(db_conf['username'], db_conf['password'], db_conf['url'], db_conf['port'])
+    url = "https://{0}:{1}@{2}".format(db_conf['username'], db_conf['password'], db_conf['url'])
     s = couchdb.Server(url)
     db_conf = conf['statusdbdev']
-    url = "http://{0}:{1}@{2}:{3}".format(db_conf['username'], db_conf['password'], db_conf['url'], db_conf['port'])
+    url = "https://{0}:{1}@{2}".format(db_conf['username'], db_conf['password'], db_conf['url'])
     sd = couchdb.Server(url)
     db = s['charon']
     dbd = sd['charon']

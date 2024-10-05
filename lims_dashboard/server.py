@@ -2,11 +2,12 @@ import glob
 import os
 import yaml
 import logging
+import argparse
 
 
 from flask import Flask
 
-from lims_dashboard.routes import my_bp
+from routes import my_bp
 
 
 def create_app(root_path=os.path.split(os.path.split(os.path.realpath(__file__))[0])[0], python=None):
@@ -25,17 +26,23 @@ def create_app(root_path=os.path.split(os.path.split(os.path.realpath(__file__))
     return app
 
 
-def setup_logger():
-    logger = logging.getLogger("lims_dashboard")
+def setup_logger(path):
+    logger = logging.getLogger("werkzeug")
     logger.setLevel("INFO")
-    loghandler = logging.StreamHandler()
+    loghandler = logging.FileHandler(path)
     loghandler.setFormatter(logging.Formatter('%(asctime)s : %(levelname)s : %(message)s'))
     logger.addHandler(loghandler)
 
-
-setup_logger()
 
 app = None
 if not app:
     python_exec = "{0}/anaconda/envs/lims2db/bin/python".format(os.environ["HOME"])
     app = create_app(python=python_exec)
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--port", help="Port to run lims_dashboard")
+    parser.add_argument("--logfile", help="Path to logfile")
+    args = parser.parse_args()
+    setup_logger(args.logfile)
+    app.run(port=int(args.port))
