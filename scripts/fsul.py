@@ -41,7 +41,7 @@ def main(args):
         else:
             mainlog.info("updating {}".format(fcid))
             # update the couch right couch document
-            upload_to_couch(couch, fcid, lims_data)
+            upload_to_couch(couch, fcid, lims_data, step)
 
 
 def get_logger(name):
