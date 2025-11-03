@@ -74,6 +74,7 @@ def main(args):
         try:
             docd = statusdb_dev.get_document(db="charon", doc_id=i).get_result()
         except ApiException:
+            docd = {}
             for key in list(doc.keys()):
                 if key != '_rev':
                     docd[key] = doc[key]
